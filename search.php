@@ -59,7 +59,7 @@ foreach ($results->statuses as $result) {
         }
 }
 
-while(count($locList)<=20){ 
+while(count($locList)<=20000){ 
 $maxID = $results->statuses[99]->id;
 
 $query = array(
