@@ -1,0 +1,101 @@
+<?php
+
+
+foreach ($results->statuses as $result) {
+
+       if(!($result->geo==null)){
+          $json_obj = json_decode(json_encode($result->coordinates), true);
+          $key = array_search ( $json_obj["coordinates"][0] , $locList );
+          if($key!=false)
+              {
+                $key = $key+1;
+                if ($locList[$key] ==$json_obj["coordinates"][1] )
+                {$locList[$key+1] = $locList[$key+1] +0.05;
+                echo "dupe";
+              }
+              }
+          else
+            {array_push($locList, $json_obj["coordinates"][0], $json_obj["coordinates"][1],.05); }
+        }
+        else{
+           $thing = getLatLon( $result->user->location);
+           $key = array_search ( $thing[0] , $locList );
+          if($key!=false)
+              {
+                $key = $key+1;
+                if ($locList[$key] == $thing[1] )
+                {$locList[$key+1] = $locList[$key+1] +0.05;
+                echo "dupe";
+              }
+              }
+          else
+            { array_push($locList, $thing[0], $thing[1],.05);}
+        }
+}
+
+
+
+
+
+
+
+          if(in_array(  $json_obj["coordinates"][0] , $locList ))
+              {
+                $key = array_search ( $json_obj["coordinates"][0] , $locList )+1;
+                if ($locList[$key] ==$json_obj["coordinates"][0] )
+                {$locList[$key+1] = $locList[$key] +0.1;
+                echo "dupe";
+              }
+              }
+          else
+            {array_push($locList, $json_obj["coordinates"][0], $json_obj["coordinates"][1],.1); }
+        }
+        else{
+        $thing = getLatLon( $result->user->location);
+        array_push($locList, $thing[0], $thing[1],.1);
+        }
+}
+
+
+
+
+          $key = array_search ( $json_obj["coordinates"][0] , $locList );
+          if($key!=false)
+              {
+                $key = $key+1;
+                if ($locList[$key] ==$json_obj["coordinates"][1] )
+                {$locList[$key+1] = $locList[$key+1] +0.05;
+              }
+              }
+          else
+            {array_push($locList, $json_obj["coordinates"][0], $json_obj["coordinates"][1],.05); }
+        }
+        else{
+           $thing = getLatLon( $result->user->location);
+           $key = array_search ( $thing[0] , $locList );
+          if($key!=false)
+              {
+                $key = $key+1;
+                if ($locList[$key] == $thing[1] )
+                {$locList[$key+1] = $locList[$key+1] +0.05;
+              }
+              }
+          else
+            { array_push($locList, $thing[0], $thing[1],.05);}
+        }
+}
+
+
+
+foreach ($results->statuses as $result) {
+
+       if(!($result->geo==null)){
+          $json_obj = json_decode(json_encode($result->coordinates), true);
+          array_push($locList, $json_obj["coordinates"][0], $json_obj["coordinates"][1],.1);
+        }
+        else{
+      $thing = getLatLon( $result->user->location);
+        array_push($locList, $thing[0], $thing[1],.1);
+        }
+}
+?>

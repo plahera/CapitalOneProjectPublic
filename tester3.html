@@ -1,0 +1,115 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  
+  
+  <title>WebGL Globe</title>
+  <meta charset="utf-8">
+  <style type="text/css">
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #666 url(globe/loading.gif) center center no-repeat;
+      color: #ffffff;
+      font-family: sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+      height: 100%;
+    }
+
+    #info {
+
+      font-size: 11px;
+      position: absolute;
+      bottom: 5px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 3px;
+      right: 10px;
+      padding: 10px;
+
+    }
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .bull {
+      padding: 0px 5px;
+      color: #555;
+    }
+
+    #title {
+      position: absolute;
+      top: 20px;
+      width: 320px;
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.2);
+      font: 20px/20px Georgia;
+      padding: 15px;
+    }
+
+    .subtitle {
+      font: 14px/14px Georgia;
+    }
+    
+  </style>
+</head>
+<body>
+
+<div id="container"></div>
+
+
+
+
+<script type="text/javascript" src="ThreeWebGL.js"></script>
+<script type="text/javascript" src="ThreeExtras.js"></script>
+<script type="text/javascript" src="RequestAnimationFrame.js"></script>
+<script type="text/javascript" src="Detector.js"></script>
+<script type="text/javascript" src="globe.js"></script>
+<script type="text/javascript">
+
+  var globe = DAT.Globe(document.getElementById('container'), function(label) {
+    return new THREE.Color([
+      0x004c7f, 0x00785f, 0x00a53f, 0x00d21f, 0x00ff00][label]);
+  });
+
+
+  xhr = new XMLHttpRequest();
+  xhr.open('GET', 'data.json', true);
+  xhr.onreadystatechange = function(e) {
+     // If we've received the data
+    if ( xhr.readyState === 4 && xhr.status === 200 ) {
+
+        // Parse the JSON
+        var data = [['m', [ 42.360082, -71.058880, .5 ]]];
+        //var data = JSON.parse( xhr.responseText );
+
+        // Tell the globe about your JSON data
+            globe.addData( data[0][1], {format: 'magnitude', name: data[0][0]} );
+
+        // Create the geometry
+        globe.createPoints();
+
+        // Begin animation
+        globe.animate();
+
+    }
+  };
+  xhr.send(null);
+
+</script>
+
+
+</body>
+
+</html>
